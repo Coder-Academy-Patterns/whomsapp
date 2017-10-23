@@ -1,20 +1,14 @@
 module ApplicationHelper
-  EMOJI_CODES_TABLE = {
-    ':smiley:' => '😃',
-    ':sleeping:' => '😴',
-    ':joy:' => '😂',
-    ':star:' => '⭐️',
-    ':dog:' => '🐶',
-    ':monkey_face:' => '🐵'
-  }
-
   def format_emoji_codes(input)
-    # Doesn’t handle when code is not valid
-    # input.gsub(/:[a-z_]+:/, EMOJI_CODES_TABLE)
-    
-    # Does handle when code is not valid
+    # Find all emoji-code-like things
     input.gsub(/:[a-z_]+:/) do |match|
-      EMOJI_CODES_TABLE.fetch(match, match)
+      # Trim the leading and trailing colons
+      emoji_name = match[1..-2]
+      # Use the gemoji gem to find the matching emoji
+      emoji = Emoji.find_by_alias(emoji_name)
+      # If an emoji was found, return its unicode string
+      # otherwise leave the matching string untouched
+      emoji ? emoji.raw : match
     end
   end
 end

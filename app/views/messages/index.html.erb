@@ -7,6 +7,7 @@
     <tr>
       <th>Sender</th>
       <th>Content</th>
+      <th>Raw content</th>
     </tr>
   </thead>
 
@@ -14,7 +15,8 @@
     <% @messages.each do |message| %>
       <tr>
         <td><%= message.sender.email %></td>
-        <td><%= message.content %></td>
+        <td><%= format_emoji_codes message.content %></td>
+        <td><pre><%= message.content %></pre></td>
       </tr>
     <% end %>
   </tbody>
